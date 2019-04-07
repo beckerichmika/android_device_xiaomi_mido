@@ -105,8 +105,8 @@ PRODUCT_COPY_FILES += \
 # Camera
 PRODUCT_PACKAGES += \
     camera.msm8953 \
-    libmm-qcamera \
-    Snap
+    libmm-qcamera
+    #Snap
 
 # Consumerir
 PRODUCT_PACKAGES += \
@@ -204,13 +204,7 @@ PRODUCT_PACKAGES += \
     libOmxSwVencHevc \
     libOmxVdec \
     libOmxVenc \
-    libstagefrighthw \
-    libcamera_compat_layer \
-    libis_compat_layer \
-    libmedia_compat_layer \
-    libui_compat_layer \
-    libsf_compat_layer
-
+    libstagefrighthw
 
 # Power
 PRODUCT_PACKAGES += \
@@ -239,6 +233,10 @@ PRODUCT_PACKAGES += \
     librmnetctl \
     libcnefeatureconfig \
     libxml2
+
+#Camera configuration
+PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
+  camera.fifo.disable=1
 
 # Sensors
 PRODUCT_COPY_FILES += \
