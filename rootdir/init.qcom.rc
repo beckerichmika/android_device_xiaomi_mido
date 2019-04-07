@@ -123,7 +123,7 @@ on boot
 
     #Remove SUID bit for iproute2 ip tool
     chmod 0755 /system/bin/ip
-
+    insmod /system/lib/modules/wlan.ko
 
     chmod 0444 /sys/devices/platform/msm_hsusb/gadget/usb_state
 
@@ -215,6 +215,7 @@ on post-fs-data
     mkdir /data/misc/stargate/bg_estimation 0770 system system
     mkdir /data/misc/stargate/calib_test 0770 system system
     mkdir /data/misc/stargate/database 0770 system system
+
 
     # Create directory for TZ Apps
     mkdir /data/misc/qsee 0770 system system
@@ -631,6 +632,7 @@ service qseeproxydaemon /system/vendor/bin/qseeproxydaemon
     user system
     group system
     writepid /dev/cpuset/system-background/tasks
+    disabled
 
 on charger
     setprop persist.sys.usb.config charging
@@ -646,7 +648,7 @@ service fingerprintd /system/bin/fingerprintd
 service gx_fpd /system/bin/gx_fpd
      class core
      user root
-     group system system
+     group system
      writepid /dev/cpuset/system-background/tasks
 
 on property:sys.fp.vendor=switchf

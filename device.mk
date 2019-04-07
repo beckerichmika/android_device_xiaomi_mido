@@ -81,6 +81,7 @@ PRODUCT_PACKAGES += \
     libqcompostprocbundle \
     tinymix
 
+
 # Audio configuration
 PRODUCT_COPY_FILES += \
 	$(LOCAL_PATH)/audio/audio_policy.conf:system/etc/audio_policy.conf \
@@ -203,7 +204,13 @@ PRODUCT_PACKAGES += \
     libOmxSwVencHevc \
     libOmxVdec \
     libOmxVenc \
-    libstagefrighthw
+    libstagefrighthw \
+    libcamera_compat_layer \
+    libis_compat_layer \
+    libmedia_compat_layer \
+    libui_compat_layer \
+    libsf_compat_layer
+
 
 # Power
 PRODUCT_PACKAGES += \
@@ -267,3 +274,4 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/wifi/fstman.ini:system/etc/wifi/fstman.ini \
     $(LOCAL_PATH)/wifi/WCNSS_cfg.dat:system/etc/firmware/wlan/prima/WCNSS_cfg.dat \
     $(LOCAL_PATH)/wifi/WCNSS_qcom_cfg.ini:system/etc/wifi/WCNSS_qcom_cfg.ini
+

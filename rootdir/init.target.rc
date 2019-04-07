@@ -51,6 +51,7 @@ on post-fs-data
     mkdir /persist/data/tz 0700 system system
     mkdir /data/misc/dts 0770 media audio
     mkdir /data/misc/hbtp 0750 system system
+  
 
 #start camera server as daemon
 service qcamerasvr /system/bin/mm-qcamera-daemon
@@ -130,16 +131,16 @@ service ims_rtp_daemon /system/bin/ims_rtp_daemon
    writepid /dev/cpuset/system-background/tasks
    disabled
 
-service imscmservice /system/bin/imscmservice
-   class main
-   user system
-   group radio diag inet log
-   writepid /dev/cpuset/system-background/tasks
-   disabled
+#service imscmservice /system/bin/imscmservice
+#   class main
+#   user system
+#   group radio diag inet log
+#   writepid /dev/cpuset/system-background/tasks
+#   disabled
 
 on property:sys.ims.DATA_DAEMON_STATUS=1
     start ims_rtp_daemon
-    start imscmservice
+#    start imscmservice
 
 service ppd /system/vendor/bin/mm-pp-dpps
     class late_start
@@ -194,6 +195,7 @@ service per_mgr /system/bin/pm-service
     user system
     group system
     writepid /dev/cpuset/system-background/tasks
+    disabled
 
 service per_proxy /system/bin/pm-proxy
     class core
