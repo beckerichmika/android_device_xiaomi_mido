@@ -186,3 +186,6 @@ ro.sys.fw.trim_enable_memory=2147483648
 
 # Wifi
 wifi.interface=wlan0
+
+# lirc
+ro.lirc.dev=/dev/peel_ir 

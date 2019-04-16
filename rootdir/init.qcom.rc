@@ -31,6 +31,8 @@ import init.target.rc
 on early-init
     mount debugfs debugfs /sys/kernel/debug
     chmod 0755 /sys/kernel/debug
+    chown system:graphics /sys/devices/virtual/graphics/fb0/idle_time
+    chmod 0777 /sys/devices/virtual/graphics/fb0/idle_time
 
 on init
     # Set permissions for persist partition
@@ -382,6 +384,7 @@ on post-fs-data
     write /sys/block/dm-0/queue/read_ahead_kb 2048
     write /sys/block/dm-1/queue/read_ahead_kb 2048
 
+    insmod /system/lib/modules/wlan.ko con_mode=5
 
     #WAPI
     mkdir /data/misc/wapi_certificate 0770 system wifi
@@ -412,6 +415,13 @@ on property:sys.boot_completed=1
     write /sys/block/dm-1/queue/read_ahead_kb 512
     #WDSP FW boot sysfs node used by STHAL
     chown media audio /sys/kernel/wdsp0/boot
+    start init_firstboot
+
+service init_firstboot /system/bin/sh /system/etc/init_setup_first_boot.sh
+    class main
+    user root
+    group root
+    oneshot
 
 on property:vold.decrypt=trigger_restart_framework
     start config_bt_addr
@@ -506,6 +516,7 @@ service qti /system/vendor/bin/qti
     user radio
     group radio net_raw qcom_diag usb net_admin
     writepid /dev/cpuset/system-background/tasks
+    disabled
 
 service sensors /system/bin/sensors.qcom
     class core
@@ -671,8 +682,19 @@ on property:sys.fp.onstart=1
    setprop ro.boot.fpsensor gdx
    setprop ro.hardware.fingerprint goodix
 
-#on property:vold.decrypt=trigger_restart_min_framework
-#    start time_daemon
+on property:vold.decrypt=trigger_restart_min_framework
+    start time_daemon
+    disabled
 
-#on property:vold.decrypt=trigger_restart_framework
-#    restart time_daemon
+on property:vold.decrypt=trigger_restart_framework
+    restart time_daemon
+    disabled
+
+service audioserver /system/bin/audioserver
+    class main
+    user audioserver
+    # media gid needed for /dev/fm (radio) and for /data/misc/media (tee)
+    group audio camera drmrpc inet media mediadrm net_bt net_bt_admin net_bw_acct qcom_diag
+    ioprio rt 4
+    writepid /dev/cpuset/foreground/tasks /dev/stune/foreground/tasks
+    disabled
