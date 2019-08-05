@@ -1,0 +1,6 @@
+#!/bin/false
+
+insmod /system/lib/modules/wlan.ko
+echo 1 > /dev/wcnss_wlan
+
+echo sta > /sys/module/wlan/parameters/fwpath

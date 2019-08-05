@@ -41,6 +41,7 @@ on fs
     wait /dev/block/bootdevice/by-name/oem
     mount ext4 /dev/block/bootdevice/by-name/oem /oem ro nosuid nodev barrier=1
     
+
 on post-fs-data
     mkdir /data/tombstones 0771 system system
     mkdir /tombstones/modem 0771 system system
@@ -51,6 +52,9 @@ on post-fs-data
     mkdir /persist/data/tz 0700 system system
     mkdir /data/misc/dts 0770 media audio
     mkdir /data/misc/hbtp 0750 system system
+    insmod /system/lib/modules/wlan.ko
+    write /dev/wcnss_wlan 1
+    write /sys/module/wlan/parameters/fwpath "sta"
   
 
 #start camera server as daemon
@@ -172,7 +176,7 @@ on property:init.svc.zygote=restarting
 on charger
     wait /dev/block/bootdevice/by-name/system
     mount ext4 /dev/block/bootdevice/by-name/system /system ro barrier=1
-    load_all_props
+    #load_all_props
     setprop sys.usb.configfs 0
     setprop persist.sys.usb.config mass_storage
     start qcom-post-boot
@@ -232,6 +236,7 @@ on boot
 	write /dev/cpuset/camera-daemon/cpus 0-3
 	write /dev/cpuset/camera-daemon/mems 0
 	chown system system /dev/cpuset/camera-daemon
+	touch /dev/cpuset/camera-daemon/tasks
 	chown system system /dev/cpuset/camera-daemon/tasks
 	chmod 0664 /dev/cpuset/camera-daemon/tasks
 

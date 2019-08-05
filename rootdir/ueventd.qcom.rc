@@ -269,4 +269,4 @@
 /dev/block/platform/soc/624000.ufshc/by-name/frp        0600   system     system
 
 # lirc
-/dev/peel_ir                0660   system     system
+/dev/lirc0                0660   system     system

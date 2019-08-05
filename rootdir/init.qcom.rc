@@ -43,11 +43,14 @@ on init
     symlink /sdcard /storage/sdcard0
 
     # Create cgroup mount point for memory
+    mkdir /sys/fs/cgroup/memory/ 0750 root system
     mkdir /sys/fs/cgroup/memory/bg 0750 root system
     write /sys/fs/cgroup/memory/bg/memory.swappiness 140
     write /sys/fs/cgroup/memory/bg/memory.move_charge_at_immigrate 1
     chown root system /sys/fs/cgroup/memory/bg/tasks
     chmod 0660 /sys/fs/cgroup/memory/bg/tasks
+    mkdir /sys/fs/cgroup/systemd 755 root system
+    mkdir /sys/fs/cgroup/freezer 755 root system
 
 on post-fs
     chmod 0755 /sys/kernel/debug/tracing
@@ -125,7 +128,7 @@ on boot
 
     #Remove SUID bit for iproute2 ip tool
     chmod 0755 /system/bin/ip
-    insmod /system/lib/modules/wlan.ko
+    
 
     chmod 0444 /sys/devices/platform/msm_hsusb/gadget/usb_state
 
@@ -657,7 +660,7 @@ service fingerprintd /system/bin/fingerprintd
     class late_start
     user system
     group system sdcard_rw
-    system system
+    #system system
     writepid /dev/cpuset/system-background/tasks
     disabled
 
@@ -682,13 +685,13 @@ on property:sys.fp.onstart=1
    setprop ro.boot.fpsensor gdx
    setprop ro.hardware.fingerprint goodix
 
-on property:vold.decrypt=trigger_restart_min_framework
-    start time_daemon
-    disabled
+#on property:vold.decrypt=trigger_restart_min_framework
+#    start time_daemon
+    
 
-on property:vold.decrypt=trigger_restart_framework
-    restart time_daemon
-    disabled
+#on property:vold.decrypt=trigger_restart_framework
+#    restart time_daemon
+    
 
 service audioserver /system/bin/audioserver
     class main

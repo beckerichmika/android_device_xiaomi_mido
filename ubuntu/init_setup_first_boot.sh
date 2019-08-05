@@ -1,8 +1,8 @@
 #!/bin/sh
 
-#if [ -f /home/phablet/.first-setup-done ]; then
-#    exit
-#fi
+if [ -f /home/phablet/.first-setup-done ]; then
+    exit
+fi
 
 mount -o remount rw /
 
@@ -31,5 +31,8 @@ mkdir -p /etc/system-image/config.d
 mkdir /dev/cpuset
 mount -t cpuset cpuset /dev/cpuset
 
-#touch /home/phablet/.first-setup-done
+sed -i -e "s/load-module module-droid-discover voice_virtual_stream=true/load-module module-droid-card-24/" /etc/pulse/touch.pa
+mkdir -p ~/.config/pulse
+
+touch /home/phablet/.first-setup-done
 exit

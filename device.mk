@@ -280,7 +280,10 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/ubuntu/init_setup_first_boot.sh:system/halium/var/lib/lxc/android/pre-start.d/init_setup_first_boot.sh \
     $(LOCAL_PATH)/ubuntu/init_hcismd_up.sh:system/halium/var/lib/lxc/android/pre-start.d/init_hcismd_up.sh \
-    $(LOCAL_PATH)/ubuntu/70-android.rules:system/halium/lib/udev/rules.d/70-android.rules
+    $(LOCAL_PATH)/ubuntu/70-mido.rules:system/halium/lib/udev/rules.d/70-mido.rules \
+    $(LOCAL_PATH)/ubuntu/mido.conf:system/halium/etc/ubuntu-touch-session.d/mido.conf \
+    $(LOCAL_PATH)/ubuntu/cron-wlan:system/halium/etc/cron.d/cron-wlan \
+    $(LOCAL_PATH)/ubuntu/cron-wlan-init:system/halium/usr/local/bin/cron-wlan-init
 
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES  += \
      persist.camera.shutter.disable=1 \
